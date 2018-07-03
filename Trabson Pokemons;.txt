@@ -1,0 +1,68 @@
+-- DROP TABLE categorias;
+-- DROP TABLE fraquezas;
+-- DROP TABLE pokemons;
+CREATE TABLE categorias(
+	id INT IDENTITY(1,1) PRIMARY KEY,
+	categoria VARCHAR(100) NOT NULL
+);
+
+CREATE TABLE fraquezas(
+	id INT IDENTITY(1,1) PRIMARY KEY,
+	fraqueza1 VARCHAR(100) NOT NULL,
+	fraqueza2 VARCHAR(100) NOT NULL
+);
+
+CREATE TABLE pokemons(
+	id INT IDENTITY(1,1) PRIMARY KEY,
+	id_categoria INT,
+	id_fraqueza1 INT,	
+	id_fraqueza2 INT,	
+	nome VARCHAR(100) NOT NULL
+	FOREIGN KEY id_categoria REFERENCES categorias(id);
+	FOREIGN KEY id_fraqueza1 REFERENCES fraquezas(id);
+	FOREIGN KEY id_fraqueza2 REFERENCES fraquezas(id);
+);
+
+
+INSERT INTO fraquezas (fraqueza1, fraqueza2) VALUES
+('Water', 'Rock'),
+('Ground', NULL),
+('Electric', 'Fairy'),
+('Water', 'Ground'),
+('Ghost', 'Psychic'),
+('Grass', 'Electric'),
+('Fire', 'Fighting'),
+('Ice', 'Fire'),
+('Dark', 'Bug'),
+('Ice', 'Dragon');
+
+INSERT INTO categorias (categoria) VALUES
+('Zen Charm'),
+('Ball'),
+('Rogue'),
+('Fireworks'),
+('Gas'),
+('Sea Cucumber'),
+('Drawn Sword'),
+('Mushroom'),
+('Hypnosis'),
+('Tusk');
+
+INSERT INTO pokemons (nome, id_fraqueza1, id_fraqueza2, id_categoria) VALUES
+('Darumaka', (SELECT id FROM fraquezas WHERE fraqueza1 = 'Water'), (SELECT id FROM fraquezas WHERE fraqueza2 = 'Rock'), (SELECT id FROM categorias WHERE categoria = 'Zen Charm')),
+('Voltorb', (SELECT id FROM fraquezas WHERE fraqueza1 = 'Ground'), NULL, (SELECT id FROM categorias WHERE categoria = 'Ball')),
+('Crawdaunt', (SELECT id FROM fraquezas WHERE fraqueza1 = 'Electric'), (SELECT id FROM fraquezas WHERE fraqueza2 = 'Fairy'), (SELECT id FROM categorias WHERE categoria = 'Rogue')),
+('Blacephalon' , (SELECT id FROM fraquezas WHERE fraqueza1 = 'Water'), (SELECT id FROM fraquezas WHERE fraqueza2 = 'Ground'), (SELECT id FROM categorias WHERE categoria = 'Fireworks')),
+('Haunter', (SELECT id FROM fraquezas WHERE fraqueza1 = 'Ghost'), (SELECT id FROM fraquezas WHERE fraqueza2 = 'Psychic'), (SELECT id FROM categorias WHERE categoria = 'Gas')),
+('Pykumuku', (SELECT id FROM fraquezas WHERE fraqueza1 = 'Grass'), (SELECT id FROM fraquezas WHERE fraqueza2 = 'Electric'), (SELECT id FROM categorias WHERE categoria = 'Sea Cucumber')),
+('Kartana', (SELECT id FROM fraquezas WHERE fraqueza1 = 'Fire'), (SELECT id FROM fraquezas WHERE fraqueza2 = 'Fighting'), (SELECT id FROM categorias WHERE categoria = 'Drawn Sword')),
+('Amoonguss', (SELECT id FROM fraquezas WHERE fraqueza1 = 'Ice'), (SELECT id FROM fraquezas WHERE fraqueza2 = 'Fire'), (SELECT id FROM categorias WHERE categoria = 'Mushroom')),
+('Drowzee', (SELECT id FROM fraquezas WHERE fraqueza1 = 'Dark'), (SELECT id FROM fraquezas WHERE fraqueza2 = 'Bug'), (SELECT id FROM categorias WHERE categoria = 'Hypnosis')),
+('Axew', (SELECT id FROM fraquezas WHERE fraqueza1 = 'Ice'), (SELECT id FROM fraquezas WHERE fraqueza2 = 'Dragon'), (SELECT id FROM categorias WHERE categoria = 'Tusk'));
+
+SELECT fraqueza1, fraqueza2 FROM fraquezas;
+SELECT categoria FROM categorias;
+SELECT nome FROM pokemons;
+
+
+-- CHAMA NO XESQUEDELE DO DEREGUEXESQUE
